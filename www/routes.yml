@@ -43,6 +43,13 @@
   role:
     - 0
 
+/dash/profil:
+  controller: User
+  action: profil
+  security: true
+  role:
+    - 0
+
 /dash/categorie:
   controller: Categories
   action: listCategorie
@@ -173,6 +180,12 @@
 /dash/deleteuser:
   controller: User
   action: deleteUser
+  security: true
+  role: []
+
+/dash/deleteprofile:
+  controller: User
+  action: deleteAccount
   security: true
   role: []
 

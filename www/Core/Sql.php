@@ -90,9 +90,22 @@ abstract class Sql{
 
     public function delete(): void
     {
+        $sql = "DELETE FROM esgi_article WHERE author = ".$this->getId();
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
         $sql = "DELETE FROM ".$this->table." WHERE id = ".$this->getId();
         $queryPrepared = $this->pdo->prepare($sql);
         $queryPrepared->execute();
+    }
+    public function deleteProfile(): void
+    {
+        $sql = "DELETE FROM esgi_article WHERE author = ".$this->getId();
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        $sql = "DELETE FROM ".$this->table." WHERE id = ".$this->getId();
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        session_destroy();
     }
 
 
