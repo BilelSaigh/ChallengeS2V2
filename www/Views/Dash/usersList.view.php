@@ -116,8 +116,8 @@
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Actions </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" data-user-id="<?= $user->getId() ?>" data-action="edit">Edit</a>
-                            <a class="dropdown-item" href="#" data-user-id="<?= $user->getId() ?>" data-action="delete">Delete</a>
+                            <a class="dropdown-item userList" href="#" data-user-id="<?= $user->getId() ?>" data-action="edit">Edit</a>
+                            <a class="dropdown-item userList" href="#" data-user-id="<?= $user->getId() ?>" data-action="delete">Delete</a>
                         </div>
                     </div>
                 </td>

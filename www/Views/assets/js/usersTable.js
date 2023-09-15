@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
-    $('.dropdown-item').click(function () {
+    $('.userList').click(function () {
         const userId = $(this).data('user-id');
         const action = $(this).data('action');
         if (action === "delete") {
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     const form = document.querySelector('#editForm');
                     try {
                         const formData = JSON.parse(response);
-                        console.log(formData.firstname)
+                        // console.log(formData.firstname);
                         form.elements["Firstname"].value = formData.firstname;
                         form.elements["Lastname"].value = formData.lastname;
                         form.elements["Email"].value = formData.email;
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
                 },
                 error: function (error) {
-                    console.log(error)
+                    console.log(error);
                 }
             })
         }
