@@ -1,17 +1,17 @@
 <?php
 namespace App\Models;
+require_once __DIR__ . '/../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
 //Load Composer's autoloader
-require_once __DIR__ . '/../vendor/autoload.php';
-class Mail {
+class Mail
+{
     protected String $message;
     protected String $address;
     protected String $subject;
     protected String $name;
-
 
 
     public function setMessage($message): void
@@ -64,7 +64,7 @@ class Mail {
     {
         $mail = new PHPMailer();
         //Server settings
-        $mail->SMTPDebug = SMTP::DEBUG_OFF;                      //Enable verbose debug output
+//        $mail->SMTPDebug = SMTP::DEBUG_LOWLEVEL;                      //Enable verbose debug output
         $mail->isSMTP();                                            //Send using SMTP
         $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
         $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
@@ -81,18 +81,16 @@ class Mail {
             //Recipients
             $mail->setFrom('from@example.com', 'Adebc');
             $mail->addAddress($this->address , $this->name);     //Add a recipient
-
             // //Attachments
             // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
             // $mail->addAttachment('/tmp/image.jpg', 'new.jpg');    //Optional name
-
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = $this->subject;
             $mail->Body    = $this->message;
             $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
             $mail->send();
+
         }catch(Exception $e) {
             return '<div class="alert-error" style="text-align: center; padding: 1em ;">
                         <span>'.$e->getMessage().'</span>

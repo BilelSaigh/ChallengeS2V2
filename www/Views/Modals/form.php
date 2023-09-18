@@ -46,10 +46,10 @@
     <?php if($config["config"]["id"] == "adminForm"): ?>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <input type="submit" name="submit" class="btn btn-primary text-center py-2" value="<?= (isset($_POST['edit']))?"Save changes": $config["config"]["submit"] ?>">
+            <input type="submit" name="submit" class="btn btn-primary text-center mx-3 py-2" value="<?= (isset($_POST['edit']))?"Save changes": $config["config"]["submit"] ?>">
         </div>
     <?php elseif($config["config"]["submit"] != ""): ?>
-        <input type="submit" name="submit" class="btn btn-primary text-center py-2" value="<?= $config["config"]["submit"] ?>">
+        <input type="submit" name="submit" class="btn btn-primary text-center  py-2" value="<?= $config["config"]["submit"] ?>">
     <?php if(!empty($config["config"]["cancel"])) : ?>
         <input type="reset" class="btn btn-danger" value="<?= $config["config"]["cancel"] ?>">
     <?php endif; endif; ?>

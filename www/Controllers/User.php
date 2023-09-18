@@ -7,13 +7,50 @@ use App\Core\Verificator;
 use App\Core\View;
 use App\Forms\AddUser;
 use App\Forms\EditUser;
-use App\Forms\EditProfile;
+use App\Models\Article as ModelArticle;
+use App\Models\Setting;
 use App\Models\User as ModelUser;
 
 class User extends Sql
 {
     private array $errors = [];
 
+    public function profil():void
+    {
+        $view = new View("Dash/profil");
+        $user = new ModelUser();
+        $front = new Setting();
+        $user = $user->search(["id"=>$_SESSION["user"]["id"]]);
+        $front = $front->search(["id"=>1]);
+        $view->assign("user",$user);
+        $view->assign("title","Profil");
+        $view->assign("front",$front);
+
+    }
+    public function editProfil($requestData): false|string
+    {
+        if (!empty($requestData)) {
+            $user = new ModelUser();
+            $editUser = new ModelUser();
+            $front = new Setting();
+            $front = $front->search(["id"=>1]);
+            $user = $user->search(["id"=>$_SESSION["user"]["id"]]);
+            $editUser->setId($_SESSION["user"]["id"]);
+            ($_SESSION["user"]["firstname"]  != $requestData["firstname"])? $editUser->setFirstname($requestData["firstname"]):$editUser->setFirstname($_SESSION["user"]["firstname"]);
+            ($_SESSION["user"]["lastname"] != $requestData["lastname"])? $editUser->setLastname($requestData["lastname"]):$editUser->setLastname($_SESSION["user"]["lastname"]);
+            ($_SESSION["user"]["email"] !=  $requestData["email"])? $editUser->setEmail($requestData["email"]):$editUser->setEmail($_SESSION["user"]["email"]);
+            if($_SESSION["user"]["pwd"] != $user->verifPwd($requestData["password"]) ) { $editUser->setPassword($requestData["password"]);};
+            ($front->getWebsiteName() !=  $requestData["websiteName"] && $requestData["websiteName"]!= "")? $front->setWebsiteName($requestData["websiteName"]):$front->setWebsiteName($front->getWebsiteName());
+            $editUser->save();
+            $front->save();
+            $response = ["success" => true, "message" => "Modification done"];
+        } else {
+            $response = ["success" => false, "message" => "Error in profil edit"];
+        }
+        header("Content-Type: application/json");
+        return json_encode($response);
+
+    }
 
     public function listUser(): void
     {
@@ -56,7 +93,7 @@ class User extends Sql
                 $user->setDateInserted();
                 $user->save();
                 //send mail
-                (new Security)->sendMail();
+                (new Security)->sendMail($user);
                 return true;
             };
         };
@@ -84,12 +121,11 @@ class User extends Sql
 
         if (isset($_POST['submit']) && $_POST['submit'] == "Save changes"){
             //optimiser si temps avec boucle sur l'obj
-            // echo $user->getLastname() != $_POST["Lastname"];
             $users->setId($_POST["id"]);
-            ($user->getPassword() != $_POST["Password"])? $users->setPassword($_POST["Password"]):$user->setPassword($user->getPassword());
-            ($user->getLastname() != $_POST["Lastname"])? $users->setLastname($_POST["Lastname"]):$user->setLastname($user->getLastname());
-            ($user->getEmail() != $_POST["Email"])? $users->setEmail($_POST["Email"]):$user->setEmail($user->getEmail());
-            ($user->getRole() != $_POST["Role"])? $users->setRole($_POST["Role"]):$user->setRole($user->getRole());
+            ($user->getPassword() != $_POST["Password"])? $users->setPassword($_POST["Password"]):$users->setPassword($user->getPassword());
+            ($user->getLastname() != $_POST["Lastname"])? $users->setLastname($_POST["Lastname"]):$users->setLastname($user->getLastname());
+            ($user->getEmail() != $_POST["Email"])? $users->setEmail($_POST["Email"]):$users->setEmail($user->getEmail());
+            ($user->getRole() != $_POST["Role"])? $users->setRole($_POST["Role"]):$users->setRole($user->getRole());
             $users->save();
         }
         else if (isset($_POST['submit']) && $_POST['submit'] == "Save Profile") {

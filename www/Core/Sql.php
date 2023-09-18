@@ -24,7 +24,6 @@ abstract class Sql{
         $columnsToDeleted =get_class_vars(get_class());
         $columns = array_diff_key($columns, $columnsToDeleted);
         unset($columns["id"]);
-
         if(is_numeric($this->getId()) && $this->getId()>0)
         {
             $columnsUpdate = [];
@@ -33,7 +32,6 @@ abstract class Sql{
                 $columnsUpdate[]= $key."=:".$key;
             }
             $queryPrepared = $this->pdo->prepare("UPDATE ".$this->table." SET ".implode(",",$columnsUpdate)." WHERE id=".$this->getId());
-
         }else{
             $queryPrepared = $this->pdo->prepare("INSERT INTO ".$this->table." (".implode(",", array_keys($columns)).") 
                             VALUES (:".implode(",:", array_keys($columns)).")");
@@ -87,7 +85,6 @@ abstract class Sql{
         return $queryPrepared->fetchObject(get_called_class());
     }
 
-
     public function delete(): void
     {
         $sql = "DELETE FROM esgi_article WHERE author = ".$this->getId();
@@ -127,5 +124,101 @@ abstract class Sql{
         }
         return $objects;
     }
+
+    public function selectLimit(array $element, $limit): array
+    {
+        $toSelect = [];
+        $params = [];
+
+        foreach ($element as $key => $value) {
+            $toSelect[] = $key . "=:" . $key;
+            $params[':' . $key] = $value;
+        }
+
+        $sql = "SELECT * FROM " . $this->table . " WHERE " . implode(' AND ', $toSelect) . " ORDER BY created_at ASC LIMIT :limit";
+        $queryPrepared = $this->pdo->prepare($sql);
+
+        // Associer les valeurs des paramètres
+        foreach ($params as $paramName => $paramValue) {
+            $queryPrepared->bindValue($paramName, $paramValue);
+        }
+        $queryPrepared->bindValue(':limit', $limit, $this->pdo::PARAM_INT); // Limite en tant qu'entier
+
+        $queryPrepared->execute();
+
+        $objects = array();
+
+        while ($object = $queryPrepared->fetchObject(get_called_class())) {
+            $objects[] = $object;
+        }
+
+        return $objects;
+    }
+
+
+    public function recordView(): array
+    {
+        $sql = "SELECT COUNT(*) AS total_views FROM ". $this->table;
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll();
+    }
+    public function getCountByMonth(): bool|array
+    {
+        $sql = "SELECT
+                    EXTRACT(MONTH FROM date_inserted) AS month,
+                    COUNT(*) AS total_count
+                FROM
+                    ".$this->table."
+                WHERE
+                    date_inserted >= DATE_TRUNC('year', CURRENT_DATE)
+                GROUP BY
+                    EXTRACT(MONTH FROM date_inserted)
+                ORDER BY
+                    EXTRACT(MONTH FROM date_inserted)";
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll();
+    }
+
+    public function getCountByWeek(): bool|array
+    {
+        $sql = "SELECT
+                DATE_TRUNC('week', date_inserted) AS week,
+                COUNT(*) AS total_count
+            FROM
+               ".$this->table."
+            WHERE
+                date_inserted >= DATE_TRUNC('month', CURRENT_DATE) - INTERVAL '1 month'
+            GROUP BY
+                week
+            ORDER BY
+                week";
+
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll();
+
+
+    }
+    public function getCountByDay()
+    {
+        $sql = "SELECT
+                DATE(date_inserted) AS day,
+                COUNT(*) AS total_count
+            FROM
+               ".$this->table."
+            WHERE
+                DATE(date_inserted) = CURRENT_DATE
+            GROUP BY
+                DATE(date_inserted)
+            ORDER BY
+                DATE(date_inserted)";
+
+        $queryPrepared = $this->pdo->prepare($sql);
+        $queryPrepared->execute();
+        return $queryPrepared->fetchAll();
+    }
+
 
 }

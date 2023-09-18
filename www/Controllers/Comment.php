@@ -2,72 +2,64 @@
 
 namespace App\Controllers;
 
+use App\Core\Sql;
 use App\Forms\AddComment;
 use App\Models\Comment as ModelComment;
-use App\Core\Verificator;
 use App\Core\View;
-use App\Models\Pages;
+
 
 // use ChallengeS2\Models\Comment;
 
-class Comment
+class Comment extends Sql
 {
-    public function showComments(): void
+
+    private array $errors = [];
+
+    public function listComment():void
     {
-        $form = new AddComment();
-        $commentsModel = new ModelComment();
-        $view = new View("Dash/comments", "back");
-        $comments = $commentsModel->showAllComment();
-        $view->assign("comments", $comments);
-        $view->assign('form', $form->getConfig());
-
-        if ($form->isSubmit()) {
-            $comment = new ModelComment;
-            $errors = Verificator::form($form->getConfig(), $_POST);
-
-            // Additional validation, e.g., if the comment content is valid, etc.
-
-            if (empty($errors)) {
-                if ($this->addComment($comment)) {
-                    // Handle successful comment addition
-                } else {
-                    // Handle failure to add the comment
-                }
-            } else {
-                $errors[] = "OUPS! Something went wrong!";
-                $view->assign('errors', $errors);
-            }
-        }
-    }
-
-    public function updateComments(): void
-    {
-        $commentsModel = new ModelComment();
-        $view = new View("Dash/comments", "back");
-        $comments = $commentsModel->updateComment();
+        $view = new View("Dash/commentList");
+        $comments = new ModelComment();
+        $comments = $comments->getAll();
+        $view->assign("title", "Comments");
         $view->assign("comments", $comments);
     }
 
-    public function addComment()
-    {
-        if (isset($_SESSION["page"], $_POST["action"], $_POST["statut"]) && $_POST["action"] === "addCommentOption") {
-            $addOption = new Pages();
-            $addOption->setComment($_POST["statut"]);
-            $addOption->setId($_SESSION["page"]);
-            $addOption->setUpdatedAt();
-            $addOption->save();
-        }
-    }
-
-
-
-    public function deleteComments(): void
+    public function reportComment($requestData): string|bool
     {
         $comment = new ModelComment();
-        $comment->setId($_POST["comment_id"]); // Assuming you are passing the comment ID in $_POST.
-        $comment->deleteComment();
-        // Redirect to appropriate page after deleting the comment.
-        header('Location: /admin/comments');
+        $comment = $comment->search(["id"=>$requestData['id']]);
+        if ($comment->getReport() < 5){
+            $comment->setReport($comment->getReport());
+            $comment->save();
+            $response = array("success" => true, "message" => "Report saved");
+        }else{
+            $comment->delete();
+            $response = array("success" => false, "message" => "Comment delete");
+        }
+        header('Content-Type: application/json');
+        return json_encode($response);
     }
+    public function addComment($requestData): string|bool
+    {
+        $comment= new ModelComment();
+        $comment->setComment($requestData["comment"]);
+        $comment->setCreatedAt();
+        $comment->setAuthor($_SESSION["user"]["id"]);
+        $comment->setArticleId($requestData["article_id"]);
+        $comment->save();
+        $response = array("success" => true, "message" => "Comment add");
+
+        header('Content-Type: application/json');
+        return json_encode($response);
+    }
+
+
+    public function deleteComment(): void
+    {
+        $commentToDelete = new ModelComment();
+        $commentToDelete->setId($_POST["id"]);
+        $commentToDelete->delete();
+    }
+
 }
 

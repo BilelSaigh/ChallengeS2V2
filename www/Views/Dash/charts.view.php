@@ -11,4 +11,7 @@
         </button>
     </div>
 </div>
+<div>
+    <canvas id="myChart" data-userInfo="<?= $users ?>"></canvas>
+</div>
 <?php

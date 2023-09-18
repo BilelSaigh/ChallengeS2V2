@@ -4,6 +4,13 @@
 
     <a class="btn btn-dark" id="save-button"  role="button">Save</a>
 </div>
+<div id="alertArea" class="container mt-3">
+    <div class="alert alert-danger d-flex align-items-center p-2">
+        <i class="fs-2hx text-danger me-4"><span class="path1"></span><span class="path2"></span></i>
+        <div class="d-flex flex-column">
+            <h4 class="mb-1 text-dark">Something went wrong ! </h4>'
+</div>
+
 <?php
 if (!empty($errors)){
     echo '<div class="alert alert-danger d-flex align-items-center p-2">
@@ -17,7 +24,6 @@ if (!empty($errors)){
     }
 };
 ?>
-<?php $this->modal("form",$addArticle); ?>
 <label for="category" class="form-label"> Categories of article needed</label>
 <select name="categorie" class="form-select"  id="categorie">
     <option selected >Open this select menu</option>

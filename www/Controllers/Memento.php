@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use App\Models\Article;
+use App\Models\Article as ModelArticle;
 use App\Models\Version as ModelMemento;
 use App\Models\VersionMemento;
 
@@ -20,10 +21,8 @@ class Memento extends \App\Core\Sql
             if ($version) {
                 $memento = new VersionMemento($version->getContent());
                 $restoredContent = $memento->getContent();
-
                 $response['success'] = true;
                 $response['restoredContent'] = $restoredContent;
-
             } else {
                 $response['success'] = false;
                 $response['error'] = "Version not found";
@@ -65,6 +64,15 @@ class Memento extends \App\Core\Sql
 
     public function saveInMemento($requestData): string|bool
     {
+        $article = new ModelArticle();
+        $articleModify = new ModelArticle();
+        $article = $article->search(["id"=>$requestData['id']]) ;
+        $articleModify->setId($requestData['id']);
+        ($article->getTitle() != $requestData["title"])? $articleModify->setTitle($requestData["title"]):$articleModify->setTitle($article->getTitle());
+        ($article->getImgUrl() != $requestData["img"])? $articleModify->setImgUrl($requestData["img"]):$articleModify->setImgUrl($article->getImgUrl());
+        ($article->getCategory() != $requestData["category"])? $articleModify->setCategory($requestData["category"]):$articleModify->setCategory($article->getCategory());
+        ($article->isComment() != $requestData["comment"])? $articleModify->setComment($requestData["comment"]):$articleModify->setComment($article->isComment());
+        $articleModify->save();
         $content = $requestData['content'];
         $version = new ModelMemento();
         $version->setContent($content);

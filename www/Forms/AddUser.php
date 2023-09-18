@@ -44,15 +44,14 @@ class AddUser extends AForm {
                     "placeholder"=>"Votre email",
                     "class"=>"form-control",
                     "error"=>"Le format de votre email est incorrect",
-                                        "disabled" => false
-
+                    "disabled" => false
                 ],
                 "Password"=>[
                     "type"=>"password",
                     "placeholder"=>"Votre mot de passe",
                     "class"=>"form-control",
                     "error"=>"Votre mot de passe est incorrect",
-                                        "disabled" => false
+                    "disabled" => false
 
                 ],
                 "PasswordConfirmation"=>[
@@ -61,7 +60,7 @@ class AddUser extends AForm {
                     "confirm"=>"Password",
                     "class"=>"form-control",
                     "error"=>"Mot de passe de confirmation incorrect",
-                                        "disabled" => false
+                   "disabled" => false
 
                 ],
                 "Role"=>[

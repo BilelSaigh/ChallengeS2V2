@@ -3,9 +3,10 @@ const fillTtitle = document.getElementById("title")
 const title = articleData.getAttribute("data-title");
 const articleId = articleData.dataset.id;
 fillTtitle.value = title
+const saveButton = document.getElementById("save-button");
+
 let content = JSON.parse(articleData.getAttribute("data-content"));
 if (content === "{}"){
-    console.log("ok")
     content = {}
 }
 let previousContentText
@@ -168,10 +169,12 @@ const editor = new EditorJS({
 function saveInMemento(content) {
     const formMemento = {
         content: content,
-        id: articleId
+        id: articleId,
+        title:articleData.getAttribute("data-title"),
+        img:document.getElementById('imgArticle').value,
+        category:document.getElementById("categorie").value,
+        comment: (document.getElementById("isComment")).checked
     };
-    console.log(formMemento)
-
     fetch('/dash/savememento', {
         method: 'POST',
         headers: {
@@ -179,9 +182,11 @@ function saveInMemento(content) {
         },
         body: JSON.stringify(formMemento)
     })
-        .then(response => { return response.json();
+        .then(response => {
+            console.log(response.json());return response.json();
         })
         .then(parsedData => {
+            console.log(parsedData)
             if (JSON.parse(parsedData).success) {
                 const data = JSON.parse(parsedData)
                 const restoredContent = JSON.parse(data.restoredContent);
@@ -225,14 +230,18 @@ function restoreVersion(versionId) {
         },
         body: JSON.stringify({ id: versionId })
     })
-        .then(response => response.json())
+        .then(response => {
+           return  response.json()
+        })
         .then(data => {
             const parsedData = JSON.parse(data)
+            console.log(parsedData)
             if (parsedData.success) {
                 const restoredContent = JSON.parse(parsedData.restoredContent); // Parse the JSON content
                 editor.blocks.clear();
+                console.log(restoredContent)
                 editor.blocks.render({blocks: restoredContent.blocks});
-
+                saveInMemento(JSON.stringify(restoredContent))
 
             } else {
                 swalWithBootstrapButtons.fire(
@@ -252,3 +261,75 @@ function restoreVersion(versionId) {
         });
 }
 
+saveButton.addEventListener("click", () => {
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success',
+            cancelButton: 'btn btn-danger'
+        },
+        buttonsStyling: false
+    })
+    if ( document.getElementById("title").value !== "" &&  document.getElementById("categorie").value !== "" ) {
+        const title = document.getElementById("title").value;
+        const comment = (document.getElementById("isComment")).checked;
+        const category = document.getElementById("categorie").value;
+        const imageInput = document.getElementById('imgArticle').value;
+
+        editor.save().then(savedData => {
+            const formArticle = {
+                article: savedData,
+                title: title,
+                category: category,
+                comment: comment,
+                id: articleId,
+                img: imageInput // Maintenant "url" sera accessible ici
+            }
+            console.log(formArticle)
+            fetch('/dash/newarticle', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formArticle)
+            }).then(response => {
+                return response.json()
+            })
+                .then(data => {
+                    const response = JSON.parse(data)
+                    console.log(response)
+                    if (response && response.success) {
+                        swalWithBootstrapButtons.fire(
+                            'Saved!',
+                            'Article saved',
+                            'success'
+                        )
+                        setTimeout(function() {
+                            window.location.href = '/dash/article';
+                        }, 3000);
+                    } else {
+                        swalWithBootstrapButtons.fire(
+                            'Error',
+                            'Something went wrong, the title is already used !',
+                            'error'
+                        )
+                    }
+                })
+                .catch(error => {
+                    console.log(error.toString())
+                    console.error('Erreur lors de l\'enregistrement des données', JSON.parse(error))
+                    swalWithBootstrapButtons.fire(
+                        'Error',
+                        'Something went wrong!',
+                        'error'
+                    );
+                })
+        })
+    }else{
+        swalWithBootstrapButtons.fire(
+            'Error',
+            'The title or the category are empty !',
+            'error'
+        );
+    }
+
+})

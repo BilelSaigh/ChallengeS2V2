@@ -15,6 +15,16 @@
 
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <?= ($title == "Subscription")? '<script type=text/javascript> 
+        const elements = document.getElementsByClassName("form-select");
+        console.log(elements)
+        if (elements.length > 0) {
+            const element = elements[0]; // Access the first element in the collection
+            element.value = 4;
+            element.style.display = "none";
+        }
+        </script>
+' :"";?>
 
 </body>
 </html>

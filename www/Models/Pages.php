@@ -14,6 +14,7 @@ class Pages extends Sql
     protected string $content;
     protected string $updated_at;
     protected int $menu;
+    protected ?int $category;
 
     public function getId(): int
     {

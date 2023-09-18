@@ -4,6 +4,11 @@
   security: false
   role: []
 
+/confirmation:
+  controller: Security
+  action: confirmation
+  security: false
+  role: []
 
 /filterarticle:
   controller: Article
@@ -11,11 +16,43 @@
   security: false
   role: []
 
+/dash/profil:
+  controller: User
+  action: profil
+  security: true
+  role: []
 
-/dashboard:
-  controller: Main
-  action: dashboard
-  security: false
+/dash/editprofil:
+  controller: User
+  action: editProfil
+  security: true
+  role: []
+
+/dash/comment:
+  controller: Comment
+  action: listComment
+  security: true
+  role:
+    - 0
+    - 2
+
+/dash/addcomment:
+  controller: Comment
+  action: addComment
+  security: true
+  role: []
+
+/dash/deletecomment:
+  controller: Comment
+  action: deleteComment
+  security: true
+  role:
+    - 0
+
+/dash/reportcomment:
+  controller: Comment
+  action: reportComment
+  security: true
   role: []
 
 /login:
@@ -34,7 +71,7 @@
   controller: Security
   action: logout
   security: true
-  role: [ ]
+  role: []
 
 /dash/user:
   controller: User
@@ -78,13 +115,57 @@
   security: true
   role:
     - 0
+/dash/newpage:
+  controller: Pages
+  action: index
+  security: true
+  role:
+    - 0
+    - 1
+/dash/deletepage:
+  controller: Pages
+  action: deletePage
+  security: true
+  role:
+    - 0
+
 /dash/page:
+  controller: Pages
+  action: listPage
+  security: true
+  role:
+    - 0
+    - 1
+/dash/savepage:
   controller: Pages
   action: pages
   security: true
   role:
     - 0
     - 1
+
+/dash/editpage:
+  controller: Pages
+  action: editPage
+  security: true
+  role:
+    - 0
+    - 1
+/dash/statuspage:
+  controller: Pages
+  action: statusPage
+  security: true
+  role:
+    - 0
+    - 1
+
+/dash/deletePage:
+  controller: Pages
+  action: deletePage
+  security: true
+  role:
+    - 0
+
 
 /dash/addarticle:
   controller: Article
@@ -124,13 +205,6 @@
     - 0
     - 1
 
-/dash/newpage:
-  controller: Pages
-  action: index
-  security: true
-  role:
-    - 0
-    - 1
 
 /dash/newarticle:
   controller: Article
@@ -192,6 +266,8 @@
 /register:
   controller: Security
   action: register
+  security: false
+  role: []
 
 /{slug}:
   controller: Settings
@@ -205,7 +281,6 @@
   security: true
   role:
     - 0
-
 
 /dash/font:
   controller: Settings

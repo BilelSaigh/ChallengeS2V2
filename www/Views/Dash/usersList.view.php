@@ -1,4 +1,4 @@
-<h2 class="pt-5">Users</h2>
+<h2 class="pt-5">All Users</h2>
 <div class="d-flex justify-content-end my-3">
 
     <!-- Button trigger modal -->
