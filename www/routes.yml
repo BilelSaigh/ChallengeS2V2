@@ -221,7 +221,7 @@
   role:
     - 0
 
-/aricles:
+/articles:
   controller: Blog
   action: getAllArticle
   role: []
@@ -232,3 +232,14 @@
   security: false
   role: []
 
+/installer/form:
+  controller: FormInstaller
+  action: index
+  security: false
+  role: []
+
+/validateform:
+  controller: FormInstaller
+  action: validate
+  security: false
+  role: []
