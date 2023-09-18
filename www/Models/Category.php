@@ -7,7 +7,32 @@ use App\Core\Sql;
 class Category extends Sql
 {
     protected int $id = 0;
+    protected int $menu = 0;
     protected String $title;
+    protected String $slug;
+
+
+
+    public function getSlug(): string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(): void
+    {
+        $this->slug ="all-".strtolower(trim(str_replace(' ', '-', preg_replace('/[[:punct:]]/', '', $this->getTitle()))));
+    }
+
+    public function isMenu(): int
+    {
+        return $this->menu;
+    }
+
+    public function setMenu(int $menu): void
+    {
+        $this->menu = $menu;
+    }
+
 
     /**
      * @return int

@@ -10,39 +10,20 @@ class Page extends Sql
     protected String $title;
     protected String $slug;
     protected String $description;
-    protected Int $status;
+    protected Int $status ;
+    protected string $content;
+    protected string $updated_at;
     protected int $menu;
+    protected ?int $category;
 
-    public function getCategory(): int
+    public function getCategory(): ?int
     {
         return $this->category;
     }
 
-    public function setCategory(int $category): void
+    public function setCategory(?int $category): void
     {
         $this->category = $category;
-    }
-    protected String $content;
-    protected String $updated_at;
-
-    public function getUpdatedAt(): string
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(): void
-    {
-        $this->updated_at = date("Y-m-d H:i:s");
-    }
-
-    public function getContent(): string
-    {
-        return $this->content;
-    }
-
-    public function setContent(string $content): void
-    {
-        $this->content = $content;
     }
 
     public function getId(): int
@@ -62,7 +43,7 @@ class Page extends Sql
 
     public function setTitle(string $title): void
     {
-        $this->title = $title;
+        $this->title = trim(ucfirst(strtolower($title)));
     }
 
     public function getSlug(): string
@@ -70,7 +51,7 @@ class Page extends Sql
         return $this->slug;
     }
 
-    public function setSlug(string $slug): void
+    public function setSlug(): void
     {
         $this->slug = strtolower(trim(str_replace(' ', '-', preg_replace('/[[:punct:]]/', '', $this->getTitle()))));
     }
@@ -95,6 +76,32 @@ class Page extends Sql
         $this->status = $status;
     }
 
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    public function setContent(string $content): void
+    {
+        $this->content = $content;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updated_at;
+    }
+
+    /**
+     * @param mixed $updated_at
+     */
+    public function setUpdatedAt(): void
+    {
+        $this->updated_at = date("Y-m-d H:i:s");
+    }
+
     public function getMenu(): int
     {
         return $this->menu;
@@ -104,8 +111,6 @@ class Page extends Sql
     {
         $this->menu = $menu;
     }
-
-
 
 
 }

@@ -4,9 +4,9 @@ namespace App\Models;
 
 class Setting extends \App\Core\Sql
 {
-    protected int $id =0;
-    protected String $website_name; //mettre la valeur GLOBAL NOM DU SITE
-    protected String $H1_color;
+    protected int $id= 0;
+    protected String $website_name = "Adebc";       //mettre la valeur GLOBAL NOM DU SITE
+    protected String $h1_color;
     protected String $polices;
     protected String $p_color;
     protected String $p_size;
@@ -34,15 +34,15 @@ class Setting extends \App\Core\Sql
      */
     public function getH1Color(): string
     {
-        return $this->H1_color;
+        return $this->h1_color;
     }
 
     /**
-     * @param String $H1_color
+     * @param String $h1_color
      */
-    public function setH1Color(string $H1_color): void
+    public function setH1Color(string $h1_color): void
     {
-        $this->H1_color = $H1_color;
+        $this->h1_color = $h1_color;
     }
 
 

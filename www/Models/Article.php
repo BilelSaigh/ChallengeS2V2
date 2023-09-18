@@ -13,7 +13,7 @@ class Article extends \App\Core\Sql
    protected ?String $slug;
    protected Int $category;
    protected String $created_at;
-   protected ?String $img_url;
+   protected ?String $img_url="https://picsum.photos/seed/picsum/200/300";
 
     public function getImgUrl(): string
     {
@@ -200,18 +200,6 @@ class Article extends \App\Core\Sql
     {
         $this->author = $author;
     }
-    public function createMemento(): Version
-    {
-        return new Version($this->text, $this->id);
-    }
-
-    public function restoreMemento(Version $memento): void
-    {
-        $this->text = $memento->getContent();
-    }
-
-
-
 
 
 }

@@ -23,15 +23,15 @@ deleteButtons.forEach(button => {
             if (result.isConfirmed) {
                 $.ajax({
                     type: "post",
-                    url: "deletearticle",
+                    url: "deletepage",
                     data: {id: articleId},
                     success: function (response) {
-                       setTimeout(
-                           swalWithBootstrapButtons.fire(
-                           'Deleted!',
-                           'The article  n°' + articleId + ' has been deleted.',
-                           'success'
-                       ) ,3000) ;
+                        setTimeout(
+                            swalWithBootstrapButtons.fire(
+                                'Deleted!',
+                                'The article  n°' + articleId + ' has been deleted.',
+                                'success'
+                            ) ,3000) ;
                         document.location.reload()
                     },
                     error: function (error) {
@@ -70,14 +70,15 @@ publishButtons.forEach(button => {
             published: !isPublished
         };
 
-        fetch(`/dash/statusarticle`, {
+        // Envoyer la requête AJAX pour publier ou dépublier l'article
+        fetch(`/dash/statuspage`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(requestData)
         })
-            .then(response => { return response.json() })
+            .then(response => {return response.json() })
             .then(data => {
                 console.log(data)
                 if (JSON.parse(data).success) {

@@ -12,7 +12,7 @@
 </head>
 <body>
     <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">Company name</a>
+            <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#"><?= $_SESSION["user"]["websiteName"] ?></a>
 
             <ul class="navbar-nav flex-row d-md-none">
                 <li class="nav-item text-nowrap">
@@ -47,27 +47,39 @@
                         <hr>
                         <ul class="nav nav-pills flex-column mb-auto">
                             <li class="nav-item">
-                                <a href="/home" class="nav-link active" aria-current="page">
+                                <a href="/dash/home" class="nav-link text-white <?=($title == "Home")?"active":""?>" aria-current="page">
                                     <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#home"/></svg>
                                     Home
                                 </a>
                             </li>
                             <li>
-                                <a href="/dash/categorie" class="nav-link text-white">
+                                <a href="/dash/categorie" class="nav-link text-white <?=($title == "Category")?"active":""?>">
                                     <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
-                                    Category
+                                    Categories
                                 </a>
                             </li>
                             <li>
-                                <a href="/dash/article" class="nav-link text-white">
+                                <a href="/dash/article" class="nav-link text-white <?=($title == "Articles")?"active":""?>">
                                     <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                                     Articles
                                 </a>
                             </li>
                             <li>
-                                <a href="/dash/user" class="nav-link text-white">
+                                <a href="/dash/user" class="nav-link text-white <?=($title == "Users")?"active":""?>">
                                     <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
                                     Customers
+                                </a>
+                            </li>
+                             <li>
+                                <a href="/dash/page" class="nav-link text-white <?=($title == "Pages")?"active":""?>">
+                                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                                    Pages
+                                </a>
+                            </li>
+                             <li>
+                                <a href="/dash/comment" class="nav-link text-white <?=($title == "Comments")?"active":""?>">
+                                    <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                                    Comments
                                 </a>
                             </li>
                             </ul>
@@ -95,9 +107,11 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script  type="text/javascript" src="../Views/assets/js/charts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
     <?= ($title == "Users")? '<script src="../Views/assets/js/usersTable.js"></script>':"";?>
-    <?= ($title == "New Article" || $title == "Edit Article" )?'
+    <?= ($title == "New Article" || $title == "Edit Article")?'
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2.27.2/dist/editorjs.umd.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@latest"></script>
         <script src="../Views/assets/js/simple-image.js"></script>  
@@ -118,10 +132,13 @@
     <?= ($title == "Articles")? '<script src="../Views/assets/js/articlesTable.js"></script>':"";?>
     <?= ($title == "Edit Article")? '<script  type="text/javascript" src="../Views/assets/js/editArticle.js"></script>':"";?>
     <?= ($title == "Category")? '<script  type="text/javascript" src="../Views/assets/js/categoryTable.js"></script>':"";?>
-
-    <?= ($title == "New Article")?'<script src="../Views/assets/js/editor.js"></script>':"";?>
-    <?= ($title == "home")? '<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js" integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG" crossorigin="anonymous"></script><script src="dashboard.js"></script></body>
+    <?= ($title == "Profil")? '<script  type="text/javascript" src="../Views/assets/js/profil.js"></script>':"";?>
+    <?= ($title == "Comments")? '<script  type="text/javascript" src="../Views/assets/js/commentTable.js"></script>':"";?>
+    <?= ($title == "Pages")? '<script type="text/javascript" src="/Views/assets/js/pagesTable.js"></script>
 ':"";?>
+    <?= ($title == "New Article")?'<script src="../Views/assets/js/editor.js"></script>':"";?>
+    <?= ($title == "home")? '<script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js" integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG" crossorigin="anonymous"></script><script src="dashboard.js"></script></body> ':""?>
 
 </body>
 </html>
+

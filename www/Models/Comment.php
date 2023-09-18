@@ -5,37 +5,15 @@ use App\Core\Sql;
 class Comment extends Sql
 {
     protected Int $id = 0;
-    // protected Int $article_id;
-    protected Int $page_id;
-    protected Int $user_id;
-    protected String $content;
-    protected String $created_date;
-    protected Int $report ;
+    protected string $comment;
+    protected string $created_at;
+    protected ?int $report = 0;
+    protected int $article_id;
+    protected int $author;
 
-    /**
-     * @return Int
-     */
-    public function getReport(): int
+    public function getId(): int
     {
-        return $this->report;
-    }
-
-    /**
-     * @param Int $report
-     */
-    public function setReport(int $report): void
-    {
-        $this->report = $report +1 ;
-    }
-
-    public function setPageId(int $page_id): void
-    {
-        $this->page_id = $page_id;
-    }
-
-    public function getPageId(): int
-    {
-        return $this->page_id;
+        return $this->id;
     }
 
     public function setId(int $id): void
@@ -43,59 +21,56 @@ class Comment extends Sql
         $this->id = $id;
     }
 
-    public function getId(): int
+    public function getComment(): string
     {
-        return $this->id;
+        return $this->comment;
     }
 
-    // public function setArticleId(int $article_id): void
-    // {
-    //     $this->article_id = $article_id;
-    // }
-
-    // public function getArticleId(): int
-    // {
-    //     return $this->article_id;
-    // }
-
-    public function setUserId(int $user_id): void
+    public function setComment(string $comment): void
     {
-        $this->user_id = $user_id;
+        $this->comment = $comment;
     }
 
-    public function getUserId(): int
+    public function getCreatedAt(): string
     {
-        return $this->user_id;
+        return $this->created_at;
     }
 
-    public function setContent(string $content): void
+    public function setCreatedAt(): void
     {
-        $this->content = $content;
+        $this->created_at = date("Y-m-d H:i:s");
     }
 
-    public function getContent(): string
+    public function getReport(): ?int
     {
-        return $this->content;
+        return $this->report;
     }
 
-    public function setCreatedDate(): void
+    public function setReport(?int $report): void
     {
-        date_default_timezone_set('Europe/Paris');
-        $this->created_date =  date("Y-m-d H:i:s");
+        $this->report =++$report;
     }
 
-    public function getCreatedDate()
+    public function getArticleId(): int
     {
-        return $this->created_date;
+        return $this->article_id;
     }
 
-    public function showAllComment():array
+    public function setArticleId(int $article_id): void
     {
-        return parent::getAll();
+        $this->article_id = $article_id;
     }
 
-    public function deleteComment():void
+    public function getAuthor(): int
     {
-        parent::delete();
+        return $this->author;
     }
+
+    public function setAuthor(int $author): void
+    {
+        $this->author = $author;
+    }
+
+
+
 }

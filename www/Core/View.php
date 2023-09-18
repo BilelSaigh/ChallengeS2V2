@@ -21,7 +21,8 @@ class View {
     {
         $view = "Views/".trim($view).".view.php";
         if(!file_exists($view)){
-            die("La vue ".$view." n'existe pas");
+            $error = new Error();
+            $error->errorRedirection(404);
         }
         $this->view = $view;
     }
@@ -29,7 +30,8 @@ class View {
     {
         $template = "Views/".trim($template).".tpl.php";
         if(!file_exists($template)){
-            die("Le template ".$template." n'existe pas");
+            $error = new Error();
+            $error->errorRedirection(404);
         }
         $this->template = $template;
     }

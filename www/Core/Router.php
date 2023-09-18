@@ -2,6 +2,8 @@
 
 namespace App\Core;
 
+use JetBrains\PhpStorm\NoReturn;
+
 class Router extends RouteVerificator
 {
     private $routes;
@@ -51,8 +53,8 @@ class Router extends RouteVerificator
             }
         }
         if (empty($matchedRoute)) {
-            $error = new Error();
-            $error->errorRedirection(404);
+            $this->handleNotFoundError(404);
+            return;
         }
 
         $route = $this->routes[$matchedRoute];
@@ -70,25 +72,22 @@ class Router extends RouteVerificator
         $role = $route["role"];
 
         if (!class_exists($controller)) {
-            throw new \Exception("La class " . $controller . " n'existe pas", 500);
+            $this->handleNotFoundError(500);
         }
 
         $controllerInstance = new $controller();
 
         if (isset($security) && $security === true && !self::checkConnexion()) {
             //REDIRECTION LOGIN
-            $error = new Error();
-            $error->errorRedirection(404);
+            $this->handleNotFoundError(404);
         }
-//        if (isset($role) && !self::checkWhoIAm($role)) {
-//            $error = new Error();
-//            $error->errorRedirection(404);
-//        }
+        if (isset($role)  &&!self::checkWhoIAm($role)) {
+             $this->handleNotFoundError(500);
+        }
 
         if (!method_exists($controllerInstance, $action)) {
 
-            throw new \Exception("L'action " . $action . " n'existe pas", 500);
-
+            $this->handleNotFoundError(500);
         }
         $controllerInstance->$action(...$matchedParams);
     }
@@ -97,7 +96,6 @@ class Router extends RouteVerificator
     {
         if (empty($matchedRoute)) {
             $this->sendJsonError("Route non trouvée", 404);
-            return;
         }
 
         $route = $this->routes[$matchedRoute];
@@ -108,7 +106,8 @@ class Router extends RouteVerificator
         if (method_exists($controllerInstance, $action)) {
             $response =  $controllerInstance->$action($requestData); // Transmettez les données JSON au contrôleur
         } else {
-            $this->sendJsonError("L'action $action n'existe pas", 500);
+            $this->handleNotFoundError(500);
+
         }
         $this->sendJsonResponse($response);
     }
@@ -125,5 +124,13 @@ class Router extends RouteVerificator
         header('Content-Type: application/json');
         echo json_encode($data);
     }
+    private function handleNotFoundError($code): void
+    {
+        $error = new Error();
+        $error->errorRedirection($code);
+    }
+
+
+
 }
 

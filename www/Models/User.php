@@ -5,7 +5,7 @@ use Cassandra\Date;
 
 class User extends Sql {
 
-    protected Int $id = 0;
+    protected Int $id =0;
     protected String $firstname;
     protected String $lastname;
     protected String $email;
@@ -13,7 +13,7 @@ class User extends Sql {
     protected Int $role = 0;
     protected ?String $token;
     protected String $date_inserted;
-    protected Int $status = 0;
+    protected int $status ;
 
     /**
      * @return int
@@ -173,6 +173,14 @@ class User extends Sql {
        return $code = substr(md5(uniqid().rand(1000000, 9999999)),0,4);
     }
 
+    public function getStats(): array
+    {
+        $static["byMonth"]= parent::getCountByMonth();
+        $static["byWeek"]= parent::getCountByWeek();
+        $static["byDay"]= parent::getCountByDay();
+        return $static;
+
+    }
 
 
 }

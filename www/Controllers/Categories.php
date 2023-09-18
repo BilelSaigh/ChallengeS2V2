@@ -17,6 +17,7 @@ class Categories extends \App\Core\Sql
         if (isset($_POST["add"])){
             $category = new ModelCategory();
             $category->setTitle($_POST['title']);
+            $category->setSlug();
             $category->save();
             header("refresh: 1");
         }if (isset($_POST["edit"])){
