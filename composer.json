@@ -1,0 +1,17 @@
+{
+    "name": "estelle/challenge-s2v2",
+    "require": {
+        "phpmailer/phpmailer": "^6.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Estelle\\ChallengeS2v2\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Stelleu",
+            "email": "enkumba@myges.fr"
+        }
+    ]
+}

@@ -183,10 +183,9 @@ function saveInMemento(content) {
         body: JSON.stringify(formMemento)
     })
         .then(response => {
-            console.log(response.json());return response.json();
+           return response.json();
         })
         .then(parsedData => {
-            console.log(parsedData)
             if (JSON.parse(parsedData).success) {
                 const data = JSON.parse(parsedData)
                 const restoredContent = JSON.parse(data.restoredContent);

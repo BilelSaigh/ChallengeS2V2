@@ -120,6 +120,7 @@ class User extends Sql
             ($user->getEmail() != $_POST["Email"])? $users->setEmail($_POST["Email"]):$users->setEmail($user->getEmail());
             ($user->getRole() != $_POST["Role"])? $users->setRole($_POST["Role"]):$users->setRole($user->getRole());
             $users->save();
+            
         }else {
             if ($user) {
                 $userInfo = [

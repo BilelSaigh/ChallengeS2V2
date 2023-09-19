@@ -145,11 +145,13 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarScroll">
                         <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                            <?php  foreach ($pages as $page) : ?>
+                            <?php  foreach ($pages as $page) :
+                                    if ($page->getStatus()===1):
+                                ?>
                             <li class="nav-item">
                                 <a class="nav-item nav-link link-body-emphasis " href="<?=$page->getSlug() ?>"><?=$page->getTitle() ?></a>
                             </li>
-                            <?php  endforeach; ?>
+                            <?php endif;  endforeach; ?>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Articles
