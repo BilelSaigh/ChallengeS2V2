@@ -54,7 +54,7 @@
     document.querySelector('#submit').addEventListener('click', async () => {
         const email = document.querySelector('#email').value;
         try {
-            const validationResult = await validateForm({ email: email });
+            const validationResult = await validateForm({ name: name, email: email});
             if (validationResult.status === 'success') {
                 document.querySelector('#page2').style.display = 'none';
                 document.querySelector('#page3').style.display = 'block';
