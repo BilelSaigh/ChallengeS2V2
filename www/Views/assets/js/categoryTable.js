@@ -26,12 +26,13 @@ document.addEventListener("DOMContentLoaded", function() {
                         url: "deletecategory",
                         data: {id: categoryId},
                         success: function (response) {
+                            console.log(response)
                             swalWithBootstrapButtons.fire(
                                 'Deleted!',
                                 'The category n°' + categoryId + ' has been deleted.',
                                 'success'
                             )
-                            document.location.reload();
+                            // document.location.reload();
                         },
                         error: function (error) {
                             swalWithBootstrapButtons.fire(

@@ -11,7 +11,7 @@ class Article extends \App\Core\Sql
    protected int $status ;
    protected int $comment ;
    protected ?String $slug;
-   protected Int $category;
+   protected ?Int $category;
    protected String $created_at;
    protected ?String $img_url="https://picsum.photos/seed/picsum/200/300";
 
