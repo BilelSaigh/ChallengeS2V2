@@ -92,8 +92,6 @@ class Settings extends Sql
         $articles = new ModelArticle();
         $articles = $articles->getAll();
 
-        $lastArticle = new ModelArticle();
-        $lastArticle = $lastArticle->selectLimit(["status"=>1,"category"=> $page->getCategory() ],3);
 
         $version = new Version();
         $versionData = [];
@@ -118,6 +116,8 @@ class Settings extends Sql
         } elseif (!empty($page)) {
             $view->assign("title", $page->getTitle());
             $view->assign("pageContent",$page);
+            $lastArticle = new ModelArticle();
+            $lastArticle = $lastArticle->selectLimit(["status"=>1,"category"=> $page->getCategory() ],3);
             $view->assign("recentArticles",$lastArticle);
 
         }elseif (!empty($menuCategory)) {
