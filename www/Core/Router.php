@@ -31,6 +31,13 @@ class Router extends RouteVerificator
         $matchedRoute = null;
         $matchedParams = [];
 
+        if (!$this->isInstallationComplete()) {
+            // Redirection vers une page d'installation en cours
+            header("Location: /installation-en-cours");
+            exit();
+        }
+
+
         foreach ($this->routes as $route => $config) {
             if (strpos($route, '{slug}') !== false) {
                 $slugPattern = '([^/?]+)';
