@@ -52,14 +52,13 @@ if (!empty($errors)){
                     <input type="password" readonly class="form-control-plaintext" id="password" value="<?= $user->getPassword() ?>">
                 </div>
             </div>
-            <?php if($_SESSION["user"]["role"] === 0 ):  ?>
-               <div class="mb-3 row">
+               <div class="mb-3 row <?= ($_SESSION["user"]["role"]!=0 ? "d-none": "" ) ?>">
                     <label for="websiteName" class="col-sm-2 col-form-label">Website Name</label>
                     <div class="col-sm-10">
                         <input type="text" readonly class="form-control-plaintext" id="websiteName" value="<?= trim($front->getWebsiteName() ) ?>">
                     </div>
                 </div>
-          <?php endif;?>
+
         </form>
     </div>
 </div>

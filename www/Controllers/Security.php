@@ -89,6 +89,10 @@ class Security{
 
     public function logout(): void
     {
+        $user = new \App\Models\User();
+        $user->setId($_SESSION["user"]["id"]);
+        $user->setToken(null);
+        $user->save();
         session_destroy();
         echo '<script>window.location.replace("/login");</script>';
         exit;
