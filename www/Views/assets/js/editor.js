@@ -134,7 +134,6 @@ saveButton.addEventListener("click", () => {
                 },
                 body: JSON.stringify(formArticle)
             }).then(response => {
-                console.log(response.json())
                 return response.json()
             })
                 .then(data => {
