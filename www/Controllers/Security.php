@@ -108,7 +108,7 @@ class Security{
                                             <h5 class="card-title"> Adebc vous souhaite la bienvenue ! </h5>
                                             <p class="card-text">Une fois votre compte validé vous pourrez commenter autant que vous le souhaitez !.</p>
                                             <p class="card-text">Oublie pas le respect est OBLIGATOIRE chez nous ;)  .</p>
-                                                <button><a class="btn btn-primary" href="vps-eab39a43.vps.ovh.net:81/confirmation?key='.$user->getToken().'"> Confirmer votre mail. </a></button>
+                                            <button><a class="btn btn-primary" href="http://vps-eab39a43.vps.ovh.net:81/confirmation?key='.$user->getToken().'"> Confirmer votre mail. </a></button>
                                            </div>');
         $confMail->mail($confMail->initMail());
     }
@@ -117,6 +117,7 @@ class Security{
     {
         if (isset($_GET['key']) && !empty(($_GET['key']))){
             $user = new User;
+            $newUser = new User;
             $newUser = $user->search(["token" =>$_GET['key']]);
             if (!empty($newUser)){
                 $newUser->setStatus(true);
