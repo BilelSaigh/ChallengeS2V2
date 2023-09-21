@@ -17,6 +17,7 @@ class User extends Sql
 
     public function profil():void
     {
+        var_dump($_SESSION);
         $view = new View("Dash/profil");
         $user = new ModelUser();
         $front = new Setting();
