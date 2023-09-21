@@ -108,7 +108,7 @@ class Security{
                                             <h5 class="card-title"> Adebc vous souhaite la bienvenue ! </h5>
                                             <p class="card-text">Une fois votre compte validé vous pourrez commenter autant que vous le souhaitez !.</p>
                                             <p class="card-text">Oublie pas le respect est OBLIGATOIRE chez nous ;)  .</p>
-                                                <button><a class="btn btn-primary" href="http://127.0.0.1:81/confirmation?key='.$user->getToken().'"> Confirmer votre mail. </a></button>
+                                                <button><a class="btn btn-primary" href="vps-eab39a43.vps.ovh.net:81/confirmation?key='.$user->getToken().'"> Confirmer votre mail. </a></button>
                                            </div>');
         $confMail->mail($confMail->initMail());
     }
@@ -122,7 +122,7 @@ class Security{
                 $newUser->setStatus(true);
                 $newUser->setToken(null);
                 $newUser->save();
-                $this->login();
+                (new User)->profil();
             }else{
                 echo '<div class="alert-error" style="text-align: center; padding: 1em ;">
                         <span> Compte inexistant, veuillez verifier que la durée du mail n est pas expirée </span>
