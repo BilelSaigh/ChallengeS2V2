@@ -14,7 +14,7 @@
         <div class="col-md-8">
             <h3 class="pb-4 mb-4 fst-italic border-bottom"> All Articles </h3>
             <!-- Ajoutez le menu déroulant pour sélectionner une catégorie -->
-            <select id="category-filter" class="form-select mb-3">
+            <select id="category-filter" class="form-select mb-3 mt-5">
                 <option value="all">All Categories</option>
                 <?php foreach ($categories as $category) : ?>
                     <option value="<?= $category->getId() ?>"><?= $category->getTitle() ?></option>

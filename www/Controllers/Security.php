@@ -123,7 +123,8 @@ class Security{
                 $newUser->setStatus(true);
                 $newUser->setToken(null);
                 $newUser->save();
-                $this->login();
+                echo '<script>window.location.replace("/login");</script>';
+                exit;
             }else{
                 echo '<div class="alert-error" style="text-align: center; padding: 1em ;">
                         <span> Compte inexistant, veuillez verifier que la durée du mail n est pas expirée </span>

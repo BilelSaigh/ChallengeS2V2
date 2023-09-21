@@ -286,6 +286,7 @@
 /aricles:
   controller: Blog
   action: getAllArticle
+  security: false
   role: []
 
 /sitemap:

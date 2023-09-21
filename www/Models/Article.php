@@ -116,7 +116,7 @@ class Article extends \App\Core\Sql
     /**
      * @param Int $category
      */
-    public function setCategory(int $category): void
+    public function setCategory(?int $category): void
     {
         $this->category = $category;
     }
