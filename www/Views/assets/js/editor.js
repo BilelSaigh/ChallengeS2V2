@@ -100,7 +100,6 @@ const editor = new EditorJS({
     },
 
     onChange: function(api, event) {
-        console.log("something changed", event)
     }
 });
 
@@ -114,7 +113,7 @@ saveButton.addEventListener("click", () => {
             },
             buttonsStyling: false
         })
-    if ( document.getElementById("title").value !== "" &&  document.getElementById("categorie").value !== "" ) {
+    if ( document.getElementById("title").value !== "" &&  document.getElementById("categorie").value !== "" && document.getElementById("categorie").value !== "Open this select menu" ) {
         const title = document.getElementById("title").value;
         const comment = (document.getElementById("isComment")).checked;
         const category = document.getElementById("categorie").value;
