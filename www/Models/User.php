@@ -82,7 +82,7 @@ class User extends Sql {
     /**
      * @param String $token
      */
-    public function setToken(string $token): void
+    public function setToken(?string $token): void
     {
         $this->token = $token;
     }

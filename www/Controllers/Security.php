@@ -116,14 +116,14 @@ class Security{
     public function confirmation():void
     {
         if (isset($_GET['key']) && !empty(($_GET['key']))){
-            $user = new User;
-            $newUser = new User;
+            $user = new ModelUser;
+            $newUser = new ModelUser;
             $newUser = $user->search(["token" =>$_GET['key']]);
             if (!empty($newUser)){
                 $newUser->setStatus(true);
                 $newUser->setToken(null);
                 $newUser->save();
-                (new User)->profil();
+                $this->login();
             }else{
                 echo '<div class="alert-error" style="text-align: center; padding: 1em ;">
                         <span> Compte inexistant, veuillez verifier que la durée du mail n est pas expirée </span>
