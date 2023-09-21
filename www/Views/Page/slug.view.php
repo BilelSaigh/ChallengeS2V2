@@ -110,7 +110,7 @@ if (!empty($article)):?>
                                             </a>
                                         </div>
                                         <div class="col-auto d-none d-lg-block">
-                                            <img src="<?= $article->getImgUrl()?>" width="200" height="250" >
+                                            <img src="<?= (!empty($article->getImgUrl()))?$article->getImgUrl():"https://picsum.photos/200/250";?>" width="200" height="250" >
                                         </div>
                                     </div>
                     <?php endif;endforeach;endforeach; ?>

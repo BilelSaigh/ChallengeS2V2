@@ -42,7 +42,7 @@
                     <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
                         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"><a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                               <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-                              <span class="fs-4">Sidebar</span>
+                              <span class="fs-4">Menu</span>
                         </a>
                         <hr>
                         <ul class="nav nav-pills flex-column mb-auto">
@@ -52,6 +52,7 @@
                                     Home
                                 </a>
                             </li>
+                            <?php if ($_SESSION['user']['role'] != 3):?>
                             <li>
                                 <a href="/dash/categorie" class="nav-link text-white <?=($title == "Category")?"active":""?>">
                                     <svg class="bi pe-none me-2" width="16" height="16"><use xlink:href="#table"/></svg>
@@ -82,6 +83,7 @@
                                     Comments
                                 </a>
                             </li>
+                            <?php endif;?>
                             </ul>
                             <hr>
                             <div class="dropdown">
@@ -90,7 +92,6 @@
                                     <strong><?= $_SESSION["user"]["firstname"] ?></strong>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                                    <li><a class="dropdown-item" href="/dash/article">New article...</a></li>
                                     <li><a class="dropdown-item" href="/dash/settings">Settings</a></li>
                                     <li><a class="dropdown-item" href="/dash/profil">Profile</a></li>
                                     <li><hr class="dropdown-divider"></li>

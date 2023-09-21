@@ -39,7 +39,7 @@ class User extends Sql
             ($_SESSION["user"]["firstname"]  != $requestData["firstname"])? $editUser->setFirstname($requestData["firstname"]):$editUser->setFirstname($_SESSION["user"]["firstname"]);
             ($_SESSION["user"]["lastname"] != $requestData["lastname"])? $editUser->setLastname($requestData["lastname"]):$editUser->setLastname($_SESSION["user"]["lastname"]);
             ($_SESSION["user"]["email"] !=  $requestData["email"])? $editUser->setEmail($requestData["email"]):$editUser->setEmail($_SESSION["user"]["email"]);
-            if($_SESSION["user"]["pwd"] != $user->verifPwd($requestData["password"]) ) { $editUser->setPassword($requestData["password"]);};
+            if(!$user->verifPwd($requestData["password"]) ) { $editUser->setPassword($requestData["password"]);};
             ($front->getWebsiteName() !=  $requestData["websiteName"] && $requestData["websiteName"]!= "")? $front->setWebsiteName($requestData["websiteName"]):$front->setWebsiteName($front->getWebsiteName());
             $editUser->save();
             $front->save();
@@ -49,7 +49,6 @@ class User extends Sql
         }
         header("Content-Type: application/json");
         return json_encode($response);
-
     }
 
     public function listUser(): void

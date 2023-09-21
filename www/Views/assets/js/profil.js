@@ -43,9 +43,8 @@ saveButton.addEventListener("click",e =>{
         },
         body: JSON.stringify(form)
     })
-        .then(response => {return response.json()})
+        .then(response => {  return response.json() })
         .then(data => {
-            console.log(data)
             if (JSON.parse(data).success) {
 
                 saveButton.style.display= "none"
@@ -90,7 +89,7 @@ deleteButton.addEventListener("click",e =>{
         if (result.isConfirmed) {
             $.ajax({
                 type: "post",
-                url: "deleteUser",
+                url: "deleteuser",
                 data: {id: sessionId},
                 success: function (response) {
                     window.location.replace("/dash/logout")
