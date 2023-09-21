@@ -31,26 +31,26 @@ class Router extends RouteVerificator
 
         $matchedRoute = null;
         $matchedParams = [];
-
-        if (!$this->isInstallationComplete()) {
-            // Redirection vers une page d'installation en cours
-            header("Location: /installation-en-cours");
-            exit();
-        }
-
-
-        // Vérification de finish_installer
-        $finishInstaller = $this->isInstallationComplete(); // Mettez en œuvre la logique pour obtenir la valeur
-
-        // Vérification si la demande est une requête AJAX
-        $isAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-        // Condition d'accès au site principal
-        if ($uri !== '/installer/form' && !$finishInstaller && !$isAjaxRequest) {
-            // Si l'installation n'est pas terminée et l'utilisateur essaie d'accéder à une autre page,
-            // redirigez-le vers une page d'installation en cours ou affichez un message d'erreur.
-            header('Location: /installer/form');
-            return;
-        }
+//
+//        if (!$this->isInstallationComplete()) {
+//            // Redirection vers une page d'installation en cours
+//            header("Location: /installation-en-cours");
+//            exit();
+//        }
+//
+//
+//        // Vérification de finish_installer
+//        $finishInstaller = $this->isInstallationComplete(); // Mettez en œuvre la logique pour obtenir la valeur
+//
+//        // Vérification si la demande est une requête AJAX
+//        $isAjaxRequest = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
+//        // Condition d'accès au site principal
+//        if ($uri !== '/installer/form' && !$finishInstaller && !$isAjaxRequest) {
+//            // Si l'installation n'est pas terminée et l'utilisateur essaie d'accéder à une autre page,
+//            // redirigez-le vers une page d'installation en cours ou affichez un message d'erreur.
+//            header('Location: /installer/form');
+//            return;
+//        }
 
 
         foreach ($this->routes as $route => $config) {
